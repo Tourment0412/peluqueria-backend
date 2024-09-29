@@ -13,6 +13,6 @@ public class Product {
     @Id
     private String id;
     private String name;
-    private int cuantity;
+    private int quantity;
     private float unitPrice;
 }

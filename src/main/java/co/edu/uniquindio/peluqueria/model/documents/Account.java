@@ -1,5 +1,6 @@
 package co.edu.uniquindio.peluqueria.model.documents;
 
+import co.edu.uniquindio.peluqueria.model.enums.AccountType;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

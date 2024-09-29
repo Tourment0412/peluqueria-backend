@@ -1,10 +1,8 @@
-package co.edu.uniquindio.peluqueria.model.documents;
+package co.edu.uniquindio.peluqueria.model.vo;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("accounts")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,5 +12,5 @@ public class ProductSaleDetail {
     private String id;
     private int quantity;
     private float subtotal;
-    private String idProducto;
+    private String idProduct;
 }

@@ -15,6 +15,6 @@ public class Appointment {
     private LocalDateTime date;
     private float price;
     private String service;
-    private String idCliente;
+    private String idClient;
     private String idWorker;
 }
