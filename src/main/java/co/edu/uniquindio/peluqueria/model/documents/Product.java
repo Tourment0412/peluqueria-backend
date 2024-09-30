@@ -9,10 +9,20 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Product {
     @Id
+    @EqualsAndHashCode.Include
     private String id;
+
     private String name;
     private int quantity;
     private float unitPrice;
+
+    @Builder
+    public Product(String name, int quantity, float unitPrice) {
+        this.name = name;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+    }
 }
