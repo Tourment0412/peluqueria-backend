@@ -11,10 +11,23 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @ToString
 public class Account {
+
     @Id
+    @EqualsAndHashCode.Include
     private String id;
     private String name;
     private String email;
     private String password;
     private AccountType accountType;
+
+    @Builder
+    public Account (String id,String name, String email, String password, AccountType accountType) {
+        this.id = id;
+        this.name=name;
+        this.email=email;
+        this.password=password;
+        this.accountType=accountType;
+    }
+
 }
+

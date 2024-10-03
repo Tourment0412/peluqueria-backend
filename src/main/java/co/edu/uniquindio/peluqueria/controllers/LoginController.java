@@ -19,8 +19,8 @@ public class LoginController {
     }
 
     @PostMapping
-    public ResponseEntity<Account> login(@RequestBody String email, @RequestBody String password) {
-        return ResponseEntity.ok(accountService.findAccount(email,password));
+    public ResponseEntity<Account> login(@RequestBody Account account) {
+        return ResponseEntity.ok(accountService.findAccount(account.getEmail(),account.getPassword()));
     }
 
 }

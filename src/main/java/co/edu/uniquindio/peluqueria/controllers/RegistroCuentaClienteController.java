@@ -1,6 +1,7 @@
 package co.edu.uniquindio.peluqueria.controllers;
 
 import co.edu.uniquindio.peluqueria.model.documents.Account;
+import co.edu.uniquindio.peluqueria.model.enums.AccountType;
 import co.edu.uniquindio.peluqueria.services.implementations.AccountServiceImp;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,13 +19,14 @@ public class RegistroCuentaClienteController {
         this.accountService = accountService;
     }
 
-    @PostMapping
-    public ResponseEntity<Boolean> existClientAccount(@RequestBody String name, @RequestBody String email) {
-        return ResponseEntity.ok(accountService.existAccount(name,email));
+    @PostMapping("/exist")
+    public ResponseEntity<Boolean> existClientAccount(@RequestBody Account account) {
+        return ResponseEntity.ok(accountService.existAccountNameEmail(account.getName(),account.getEmail()));
     }
 
-    @PostMapping
-    public ResponseEntity<Void> createClientAccount(Account account) {
+    @PostMapping("/create")
+    public ResponseEntity<Void> createClientAccount(@RequestBody Account account) {
+        account.setAccountType(AccountType.CLIENT);
         accountService.saveAccount(account);
         return ResponseEntity.noContent().build();
     }
