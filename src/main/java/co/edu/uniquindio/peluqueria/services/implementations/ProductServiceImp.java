@@ -26,13 +26,17 @@ public class ProductServiceImp implements ProductService {
     @Override
     public String registerProduct(RegisterProductDTO registerProductDTO) throws Exception {
 
+        if(registerProductDTO.productName()==null || registerProductDTO.quantity()==0 || registerProductDTO.unitPrice()==0.0){
+            throw new Exception("Some values are null or empty");
+        }
+
         //TODO I should use an Account Service to get the Type of account (I just can do this if its admin)
 
-        if(exitsProduct(registerProductDTO.name())){
+        if(exitsProduct(registerProductDTO.productName())){
             throw new Exception("Product already exists");
         }
         Product product = new Product();
-        product.setName(registerProductDTO.name());
+        product.setName(registerProductDTO.productName());
         product.setQuantity(registerProductDTO.quantity());
         product.setUnitPrice(registerProductDTO.unitPrice());
         return productRepository.save(product).getId();

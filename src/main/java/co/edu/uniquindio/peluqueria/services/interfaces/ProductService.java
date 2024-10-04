@@ -9,5 +9,6 @@ import java.util.List;
 public interface ProductService {
 
     String registerProduct(RegisterProductDTO registerProductDTO) throws Exception;
+
     List<ProductItemDTO> getAllProducts() throws Exception;
 }

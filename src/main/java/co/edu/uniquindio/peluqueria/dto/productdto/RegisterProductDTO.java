@@ -1,7 +1,7 @@
 package co.edu.uniquindio.peluqueria.dto.productdto;
 
 public record RegisterProductDTO(
-        String name,
+        String productName,
         int quantity,
         float unitPrice
 ) {

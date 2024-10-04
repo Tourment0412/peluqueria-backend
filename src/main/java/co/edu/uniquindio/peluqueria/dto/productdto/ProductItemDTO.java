@@ -2,7 +2,7 @@ package co.edu.uniquindio.peluqueria.dto.productdto;
 
 public record ProductItemDTO(
         String id,
-        String name,
+        String productName,
         int quantity,
         float unitPrice
 ) {
