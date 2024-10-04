@@ -45,6 +45,7 @@ public class ProductServiceImp implements ProductService {
         //This could change if we do the treatment with the DTO's (I have to do a map with a stream)
         List<Product> products = productRepository.findAll();
         return products.stream().map(e -> new ProductItemDTO(
+                e.getId(),
                 e.getName(),
                 e.getQuantity(),
                 e.getUnitPrice()
