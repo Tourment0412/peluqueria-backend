@@ -13,7 +13,8 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        //This is going to be changed for the port of the frontend                        .allowedOrigins("http://localhost:3000")  // O la URL de tu frontend
+                        //This is going to be changed for the port of the frontend
+                        .allowedOrigins("http://localhost:3000")  // O la URL de tu frontend
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*");
             }
