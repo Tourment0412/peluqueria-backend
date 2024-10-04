@@ -1,6 +1,7 @@
 package co.edu.uniquindio.peluqueria.controllers;
 
 
+import co.edu.uniquindio.peluqueria.dto.messages.MessageDTO;
 import co.edu.uniquindio.peluqueria.dto.productdto.ProductItemDTO;
 import co.edu.uniquindio.peluqueria.dto.productdto.RegisterProductDTO;
 import co.edu.uniquindio.peluqueria.model.documents.Product;
@@ -22,22 +23,22 @@ public class ProductController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerProduct(@RequestBody RegisterProductDTO registerProductDTO) {
+    public ResponseEntity<MessageDTO<String>> registerProduct(@RequestBody RegisterProductDTO registerProductDTO) {
         try {
             String productId= productService.registerProduct(registerProductDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(productId);
+            return ResponseEntity.ok(new MessageDTO<>(false, productId));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.badRequest().body(new MessageDTO<>(true, e.getMessage()));
         }
     }
 
     @GetMapping("/get-all")
-    public ResponseEntity<?> getAllProducts() {
+    public ResponseEntity<MessageDTO<List<ProductItemDTO>>> getAllProducts() {
         try {
             List<ProductItemDTO> products = productService.getAllProducts();
-            return ResponseEntity.ok(products);
+            return ResponseEntity.ok(new MessageDTO<>(false, products));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            return ResponseEntity.internalServerError().body(new MessageDTO<>(true,null));
         }
     }
 
