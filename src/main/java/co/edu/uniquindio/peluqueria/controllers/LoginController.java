@@ -20,7 +20,9 @@ public class LoginController {
 
     @PostMapping
     public ResponseEntity<Account> login(@RequestBody Account account) {
-        return ResponseEntity.ok(accountService.findAccount(account.getEmail(),account.getPassword()));
+        Account account0=accountService.findAccount(account.getEmail(),account.getPassword());
+        System.out.println(account0);
+        return ResponseEntity.ok(account0);
     }
 
 }

@@ -20,7 +20,7 @@ public class AccountServiceImp {
     }
 
     public Account findAccount(String email, String password) {
-        return accountRepository.findByNameAndPassword(email, password);
+        return accountRepository.findByEmailAndPassword(email, password);
     }
 
     public void saveAccount(Account account) {

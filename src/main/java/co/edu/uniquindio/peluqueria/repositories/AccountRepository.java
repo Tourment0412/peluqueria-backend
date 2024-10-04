@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface AccountRepository extends MongoRepository<Account, String> {
 
-    @Query("{name: ?0,password: ?1}")
-    public Account findByNameAndPassword(String name, String password);
+    @Query("{email: ?0,password: ?1}")
+    public Account findByEmailAndPassword(String Account, String password);
 
     @Query("{ $or: [ { 'name': ?0 }, { 'email': ?1 } ] }")
     public Account findByNameOrEmail(String name,String email);
