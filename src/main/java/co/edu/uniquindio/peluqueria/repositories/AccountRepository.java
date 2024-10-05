@@ -6,15 +6,23 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AccountRepository extends MongoRepository<Account, String> {
 
-    @Query("{email: ?0,password: ?1}")
-    public Account findByEmailAndPassword(String Account, String password);
+    @Query("{name: ?0,password: ?1}")
+    Account findByNameAndPassword(String name, String password);
 
     @Query("{ $or: [ { 'name': ?0 }, { 'email': ?1 } ] }")
-    public Account findByNameOrEmail(String name,String email);
+    Account findByNameOrEmail(String name,String email);
 
+    @Query("{'email': ?0}")
+    Optional<Account> findByEmail(String email);
 
+    @Query("{'dni': ?0}")
+    Optional<Account> findByDni(String dni);
+
+    @Query("{'id': ?0}")
+    Optional<Account> findAccountById(String id);
 }

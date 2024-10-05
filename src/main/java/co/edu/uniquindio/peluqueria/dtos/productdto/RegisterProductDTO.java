@@ -1,4 +1,4 @@
-package co.edu.uniquindio.peluqueria.dto.productdto;
+package co.edu.uniquindio.peluqueria.dtos.productdto;
 
 public record RegisterProductDTO(
         String productName,

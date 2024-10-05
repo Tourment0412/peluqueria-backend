@@ -15,16 +15,23 @@ public class Account {
     @Id
     @EqualsAndHashCode.Include
     private String id;
+
+    private String dni;
     private String name;
     private String email;
     private String password;
+    private String address;
+    private String phone;
+    private int loyaltyPoints;
     private AccountType accountType;
 
     @Builder
-    public Account (String id,String name, String email, String password, AccountType accountType) {
-        this.id = id;
+    public Account (String name, String email, String password, String address, String phone, int loyaltyPoints, AccountType accountType) {
         this.name=name;
         this.email=email;
+        this.address=address;
+        this.phone=phone;
+        this.loyaltyPoints=loyaltyPoints;
         this.password=password;
         this.accountType=accountType;
     }

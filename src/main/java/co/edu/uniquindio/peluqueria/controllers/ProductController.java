@@ -1,10 +1,8 @@
 package co.edu.uniquindio.peluqueria.controllers;
 
 
-import co.edu.uniquindio.peluqueria.dto.messages.MessageDTO;
-import co.edu.uniquindio.peluqueria.dto.productdto.ProductItemDTO;
-import co.edu.uniquindio.peluqueria.dto.productdto.RegisterProductDTO;
-import co.edu.uniquindio.peluqueria.model.documents.Product;
+import co.edu.uniquindio.peluqueria.dtos.productdto.ProductItemDTO;
+import co.edu.uniquindio.peluqueria.dtos.productdto.RegisterProductDTO;
 import co.edu.uniquindio.peluqueria.services.interfaces.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

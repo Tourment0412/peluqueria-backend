@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class Appointment {
     @Id
     private String id;
+
     private LocalDateTime date;
     private float price;
     private String service;

@@ -1,33 +1,42 @@
 package co.edu.uniquindio.peluqueria.controllers;
 
+import co.edu.uniquindio.peluqueria.dtos.accountdto.CreateAccountDTO;
+import co.edu.uniquindio.peluqueria.dtos.accountdto.UpdateAccountDTO;
 import co.edu.uniquindio.peluqueria.model.documents.Account;
-import co.edu.uniquindio.peluqueria.model.enums.AccountType;
-import co.edu.uniquindio.peluqueria.services.implementations.AccountServiceImp;
+import co.edu.uniquindio.peluqueria.services.interfaces.AccountService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 
+@Service
 @RestController
+@CrossOrigin(origins = "http://localhost:63342")
 @RequiredArgsConstructor
-@RequestMapping("/api/account")
+@RequestMapping("/api/accounts")
 public class AccountController {
 
-    private final AccountServiceImp accountService;
+    private final AccountService accountService;
 
-    //TODO NO HAY EXCEPCIONES TOCA QUE ESAS COSAS TAMBIEN SE MANDEN COMO INFORMACION.
 
-    @PostMapping("/login")
-    public ResponseEntity<Account> login(@RequestBody Account account) {
-        return ResponseEntity.ok(accountService.findAccount(account.getEmail(),account.getPassword()));
+    // Endpoint para añadir una nueva cuenta (de empleado o cliente)
+    @PostMapping("/create-account")
+    public ResponseEntity<String> createAccount(@RequestBody CreateAccountDTO createAccountDTO) throws Exception {
+        String message = accountService.createAccount(createAccountDTO);
+        return ResponseEntity.ok(message);
     }
 
-    //TODO Esto deberia ser llamado por el de crear no deberia ser controlador
-    @PostMapping("/exist")
-    public ResponseEntity<Boolean> existClientAccount(@RequestBody Account account) {
-        return ResponseEntity.ok(accountService.existAccountNameEmail(account.getName(),account.getEmail()));
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteAccount(@PathVariable String id) throws Exception {
+        String message = accountService.deleteAccount(id);
+        return ResponseEntity.ok(message);
+    }
+
+    @PutMapping("/update-account")
+    public ResponseEntity<String> updateAccount(@Valid @RequestBody UpdateAccountDTO account) throws Exception {
+        String message = accountService.updateAccount(account);
+        return ResponseEntity.ok(message);
     }
 
     @PostMapping("/create")
@@ -36,5 +45,4 @@ public class AccountController {
         accountService.saveAccount(account);
         return ResponseEntity.noContent().build();
     }
-
 }

@@ -1,11 +1,10 @@
 package co.edu.uniquindio.peluqueria.services.implementations;
 
-import co.edu.uniquindio.peluqueria.dto.productdto.ProductItemDTO;
-import co.edu.uniquindio.peluqueria.dto.productdto.RegisterProductDTO;
+import co.edu.uniquindio.peluqueria.dtos.productdto.ProductItemDTO;
+import co.edu.uniquindio.peluqueria.dtos.productdto.RegisterProductDTO;
 import co.edu.uniquindio.peluqueria.model.documents.Product;
 import co.edu.uniquindio.peluqueria.repositories.ProductRepository;
 import co.edu.uniquindio.peluqueria.services.interfaces.ProductService;
-import jdk.jfr.Event;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
