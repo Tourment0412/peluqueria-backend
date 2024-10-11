@@ -11,4 +11,8 @@ public interface ProductService {
     String registerProduct(RegisterProductDTO registerProductDTO) throws Exception;
 
     List<ProductItemDTO> getAllProducts() throws Exception;
+
+    String updateProduct(ProductItemDTO productItemDTO) throws Exception;
+
+    String deleteProduct(String id) throws Exception;
 }

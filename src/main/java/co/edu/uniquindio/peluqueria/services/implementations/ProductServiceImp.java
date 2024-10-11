@@ -56,7 +56,29 @@ public class ProductServiceImp implements ProductService {
         )).collect(Collectors.toList());
     }
 
+    @Override
+    public String updateProduct(ProductItemDTO productItemDTO) throws Exception {
+        Optional<Product> productReceived= productRepository.findById(productItemDTO.id());
+        if(productReceived.isEmpty()){
+            throw new Exception("Product not found");
+        }
+        Product product = productReceived.get();
+        product.setName(productItemDTO.productName());
+        product.setQuantity(productItemDTO.quantity());
+        product.setUnitPrice(productItemDTO.unitPrice());
+        return productRepository.save(product).getId();
+    }
 
+    @Override
+    public String deleteProduct(String id) throws Exception {
+        Optional<Product> productReceived= productRepository.findById(id);
+        if(productReceived.isEmpty()){
+            throw new Exception("Product not found");
+        }
+        productRepository.deleteById(id);
+
+        return "Product deleted successfully";
+    }
 
 
     private boolean exitsProduct(String productName) throws Exception {
