@@ -1,6 +1,7 @@
 package co.edu.uniquindio.peluqueria.controllers;
 
 
+import co.edu.uniquindio.peluqueria.dto.messages.MessageDTO;
 import co.edu.uniquindio.peluqueria.dtos.productdto.ProductItemDTO;
 import co.edu.uniquindio.peluqueria.dtos.productdto.RegisterProductDTO;
 import co.edu.uniquindio.peluqueria.services.interfaces.ProductService;

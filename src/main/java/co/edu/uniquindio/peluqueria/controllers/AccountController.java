@@ -3,6 +3,7 @@ package co.edu.uniquindio.peluqueria.controllers;
 import co.edu.uniquindio.peluqueria.dtos.accountdto.CreateAccountDTO;
 import co.edu.uniquindio.peluqueria.dtos.accountdto.UpdateAccountDTO;
 import co.edu.uniquindio.peluqueria.model.documents.Account;
+import co.edu.uniquindio.peluqueria.model.enums.AccountType;
 import co.edu.uniquindio.peluqueria.services.interfaces.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class AccountController {
         return ResponseEntity.ok(message);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete-appointment/{id}")
     public ResponseEntity<String> deleteAccount(@PathVariable String id) throws Exception {
         String message = accountService.deleteAccount(id);
         return ResponseEntity.ok(message);
@@ -39,10 +40,10 @@ public class AccountController {
         return ResponseEntity.ok(message);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Void> createClientAccount(@RequestBody Account account) {
-        account.setAccountType(AccountType.CLIENT);
-        accountService.saveAccount(account);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/info-account")
+    public ResponseEntity<String> getAccount() throws Exception {
+
     }
+
+
 }

@@ -25,9 +25,8 @@ public class AccountServiceImp implements AccountService {
         return accountRepository.findByEmail(email).isPresent();
     }
 
-    public Account findAccount(String email, String password) {
-        return accountRepository.findByEmailAndPassword(email, password);
-    }
+    private boolean existAccountByDni(String dni) { return accountRepository.findByDni(dni).isPresent(); }
+
 
     @Override
     public String createAccount(CreateAccountDTO createAccountDTO) throws Exception {
@@ -52,6 +51,8 @@ public class AccountServiceImp implements AccountService {
         return account.getId();
     }
 
+
+
     @Override
     public String updateAccount(UpdateAccountDTO updateAccountDTO) throws Exception {
         Account account = getAccount(updateAccountDTO.idAccount());
@@ -73,6 +74,7 @@ public class AccountServiceImp implements AccountService {
         return "Account with id: " + idAccount + " deleted";
     }
 
+    @Override
     public InfoAccountDTO getInfoAccount(String idAccount) throws Exception {
         Account account = getAccount(idAccount);
         if (account.getAccountType().equals(AccountType.WORKER) || account.getAccountType().equals(AccountType.ADMIN)) {
