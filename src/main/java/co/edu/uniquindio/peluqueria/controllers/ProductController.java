@@ -41,4 +41,25 @@ public class ProductController {
         }
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<MessageDTO<String>> updateProduct(@RequestBody ProductItemDTO productItemDTO){
+        try {
+            String productId = productService.updateProduct(productItemDTO);
+            return ResponseEntity.ok(new MessageDTO<>(false, productId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new MessageDTO<>(true,e.getMessage()));
+        }
+
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<MessageDTO<String>> deleteProduct(@PathVariable String id){
+        try {
+            String message = productService.deleteProduct(id);
+            return ResponseEntity.ok(new MessageDTO<>(false, message));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new MessageDTO<>(true,e.getMessage()));
+        }
+    }
+
 }
