@@ -22,7 +22,7 @@ public class AccountController {
 
 
     // Endpoint para añadir una nueva cuenta (de empleado o cliente)
-    @PostMapping("/create-account")
+    @PostMapping("/create")
     public ResponseEntity<String> createAccount(@RequestBody CreateAccountDTO createAccountDTO) throws Exception {
         String message = accountService.createAccount(createAccountDTO);
         return ResponseEntity.ok(message);
@@ -40,10 +40,13 @@ public class AccountController {
         return ResponseEntity.ok(message);
     }
 
+    /*
     @GetMapping("/info-account")
     public ResponseEntity<String> getAccount() throws Exception {
 
     }
+
+     */
 
 
 }
