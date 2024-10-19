@@ -11,8 +11,8 @@ import java.util.Optional;
 @Repository
 public interface AccountRepository extends MongoRepository<Account, String> {
 
-    @Query("{name: ?0,password: ?1}")
-    Account findByNameAndPassword(String name, String password);
+    @Query("{email: ?0,password: ?1}")
+    Optional<Account> findByEmailAndPassword(String email, String password);
 
     @Query("{ $or: [ { 'name': ?0 }, { 'email': ?1 } ] }")
     Account findByNameOrEmail(String name,String email);

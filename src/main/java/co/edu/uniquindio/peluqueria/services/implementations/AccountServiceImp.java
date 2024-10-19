@@ -2,6 +2,7 @@ package co.edu.uniquindio.peluqueria.services.implementations;
 
 import co.edu.uniquindio.peluqueria.dtos.accountdto.CreateAccountDTO;
 import co.edu.uniquindio.peluqueria.dtos.accountdto.InfoAccountDTO;
+import co.edu.uniquindio.peluqueria.dtos.accountdto.InfoLoginAccount;
 import co.edu.uniquindio.peluqueria.dtos.accountdto.UpdateAccountDTO;
 import co.edu.uniquindio.peluqueria.model.documents.Account;
 import co.edu.uniquindio.peluqueria.model.enums.AccountType;
@@ -21,7 +22,8 @@ public class AccountServiceImp implements AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public boolean existAccountByEmail(String email) {
+    @Override
+    public Boolean existAccountByEmail(String email) {
         return accountRepository.findByEmail(email).isPresent();
     }
 
@@ -34,7 +36,7 @@ public class AccountServiceImp implements AccountService {
             throw new Exception("Account with this email already exists");
         }
 
-        if (existAccountByDni(createAccountDTO.dni())) {
+        if (createAccountDTO.dni()!=null && existAccountByDni(createAccountDTO.dni())) {
             throw new Exception("Account with this dni already exists");
         }
 
@@ -46,7 +48,12 @@ public class AccountServiceImp implements AccountService {
         account.setAddress(createAccountDTO.address());
         account.setPhone(createAccountDTO.phone());
         account.setLoyaltyPoints(0);
-        account.setAccountType(createAccountDTO.accountType());
+
+        if (createAccountDTO.accountType()==null) {
+            account.setAccountType(AccountType.CLIENT);
+        } else {
+            account.setAccountType(createAccountDTO.accountType());
+        }
         accountRepository.save(account);
         return account.getId();
     }
@@ -101,6 +108,17 @@ public class AccountServiceImp implements AccountService {
                 account.getLoyaltyPoints(),
                 account.getAccountType()
         );
+    }
+
+    @Override
+    public InfoLoginAccount findAccountLogin(String email, String password) {
+        Optional<Account> accountObtained=accountRepository.findByEmailAndPassword(email,password);
+        if (accountObtained.isPresent()) {
+            Account account=accountObtained.get();
+            return new InfoLoginAccount(account.getEmail(),account.getAccountType());
+        } else {
+            return null;
+        }
     }
 
     public String addLoyaltyPoints(String idAccount) throws Exception {

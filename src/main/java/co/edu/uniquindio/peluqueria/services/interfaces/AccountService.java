@@ -2,6 +2,7 @@ package co.edu.uniquindio.peluqueria.services.interfaces;
 
 import co.edu.uniquindio.peluqueria.dtos.accountdto.CreateAccountDTO;
 import co.edu.uniquindio.peluqueria.dtos.accountdto.InfoAccountDTO;
+import co.edu.uniquindio.peluqueria.dtos.accountdto.InfoLoginAccount;
 import co.edu.uniquindio.peluqueria.dtos.accountdto.UpdateAccountDTO;
 
 public interface AccountService {
@@ -9,4 +10,8 @@ public interface AccountService {
     String updateAccount(UpdateAccountDTO updateAccountDTO) throws Exception;
     String deleteAccount(String idAccount) throws Exception;
     InfoAccountDTO getInfoAccount(String idAccount) throws Exception;
+
+    InfoLoginAccount findAccountLogin(String email, String password);
+
+    Boolean existAccountByEmail(String email);
 }
