@@ -5,6 +5,7 @@ import co.edu.uniquindio.peluqueria.dtos.appointmentdto.InfoAppointmentDTO;
 import co.edu.uniquindio.peluqueria.dtos.appointmentdto.UpdateAppointmentDTO;
 import co.edu.uniquindio.peluqueria.model.documents.Appointment;
 import co.edu.uniquindio.peluqueria.repositories.AppointmentRepository;
+import co.edu.uniquindio.peluqueria.services.interfaces.AccountService;
 import co.edu.uniquindio.peluqueria.services.interfaces.AppointmentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,16 +15,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class AppointmentServiceImp implements AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
+    private AccountService accountService;
 
     public AppointmentServiceImp(AppointmentRepository appointmentRepository) {
         this.appointmentRepository = appointmentRepository;
     }
 
     @Override
-    public String createAppointment(CreateAppointmentDTO createAppointmentDTO) {
+    public String createAppointment(CreateAppointmentDTO createAppointmentDTO) throws Exception {
         Appointment appointment = new Appointment();
         appointment.setDate(createAppointmentDTO.date());
         appointment.setPrice(createAppointmentDTO.price());
+        //if(accountService.getAccountByDni(createAppointmentDTO.idClient())==null || accountService.getAccountByDni(createAppointmentDTO.idWorker())==null){
+            //throw new Exception("The customer or employee is not registered");
+        //}
         appointment.setIdClient(createAppointmentDTO.idClient());
         appointment.setIdWorker(createAppointmentDTO.idWorker());
         appointmentRepository.save(appointment);

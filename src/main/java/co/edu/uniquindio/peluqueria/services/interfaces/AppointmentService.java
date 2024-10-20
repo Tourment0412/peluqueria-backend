@@ -7,7 +7,7 @@ import co.edu.uniquindio.peluqueria.model.documents.Appointment;
 
 public interface AppointmentService {
 
-    String createAppointment(CreateAppointmentDTO appointment);
+    String createAppointment(CreateAppointmentDTO appointment) throws Exception;
     String updateAppointment(UpdateAppointmentDTO appointment) throws Exception;
     String deleteAppointment(String appointmentId) throws Exception;
     InfoAppointmentDTO getInfoAppointment(String appointmentId) throws Exception;

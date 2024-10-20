@@ -27,7 +27,10 @@ public class AccountServiceImp implements AccountService {
         return accountRepository.findByEmail(email).isPresent();
     }
 
-    private boolean existAccountByDni(String dni) { return accountRepository.findByDni(dni).isPresent(); }
+    public Account getAccountByDni(String dni) {
+        Optional<Account> account = accountRepository.findByDni(dni);
+        return account.orElse(null);
+    }
 
 
     @Override
@@ -36,10 +39,17 @@ public class AccountServiceImp implements AccountService {
             throw new Exception("Account with this email already exists");
         }
 
-        if (createAccountDTO.dni()!=null && existAccountByDni(createAccountDTO.dni())) {
+        if (createAccountDTO.dni() != null) {
+            getAccountByDni(createAccountDTO.dni());
             throw new Exception("Account with this dni already exists");
         }
 
+        Account account = getAccount(createAccountDTO);
+        accountRepository.save(account);
+        return account.getId();
+    }
+
+    private static Account getAccount(CreateAccountDTO createAccountDTO) {
         Account account = new Account();
         account.setEmail(createAccountDTO.email());
         account.setDni(createAccountDTO.dni());
@@ -54,15 +64,13 @@ public class AccountServiceImp implements AccountService {
         } else {
             account.setAccountType(createAccountDTO.accountType());
         }
-        accountRepository.save(account);
-        return account.getId();
+        return account;
     }
-
 
 
     @Override
     public String updateAccount(UpdateAccountDTO updateAccountDTO) throws Exception {
-        Account account = getAccount(updateAccountDTO.idAccount());
+        Account account = getAccountById(updateAccountDTO.idAccount());
 
         account.setName(updateAccountDTO.name());
         account.setDni(updateAccountDTO.dni());
@@ -76,15 +84,15 @@ public class AccountServiceImp implements AccountService {
 
     @Override
     public String deleteAccount(String idAccount) throws Exception {
-        Account account = getAccount(idAccount);
+        Account account = getAccountById(idAccount);
         accountRepository.delete(account);
         return "Account with id: " + idAccount + " deleted";
     }
 
     @Override
     public InfoAccountDTO getInfoAccount(String idAccount) throws Exception {
-        Account account = getAccount(idAccount);
-        if (account.getAccountType().equals(AccountType.WORKER) || account.getAccountType().equals(AccountType.ADMIN)) {
+        Account account = getAccountById(idAccount);
+        if (account.getAccountType().equals(AccountType.EMPLOYEE) || account.getAccountType().equals(AccountType.ADMIN)) {
             return new InfoAccountDTO(
                     account.getId(),
                     account.getDni(),
@@ -122,13 +130,13 @@ public class AccountServiceImp implements AccountService {
     }
 
     public String addLoyaltyPoints(String idAccount) throws Exception {
-        Account account = getAccount(idAccount);
+        Account account = getAccountById(idAccount);
         account.setLoyaltyPoints(account.getLoyaltyPoints() + 1);
         accountRepository.save(account);
         return "Loyalty points added to account: " + account.getId();
     }
 
-    private Account getAccount(String id) throws Exception {
+    private Account getAccountById(String id) throws Exception {
         Optional<Account> accountOptional = accountRepository.findAccountById(id);
         if (accountOptional.isEmpty()) {
             throw new Exception("Account with this id does not exist");

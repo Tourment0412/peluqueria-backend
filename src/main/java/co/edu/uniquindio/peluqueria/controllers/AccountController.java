@@ -41,25 +41,19 @@ public class AccountController {
         return ResponseEntity.ok(message);
     }
 
-    @DeleteMapping("/delete-appointment/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteAccount(@PathVariable String id) throws Exception {
         String message = accountService.deleteAccount(id);
         return ResponseEntity.ok(message);
     }
 
-    @PutMapping("/update-account")
+    @PutMapping("/update")
     public ResponseEntity<String> updateAccount(@Valid @RequestBody UpdateAccountDTO account) throws Exception {
         String message = accountService.updateAccount(account);
         return ResponseEntity.ok(message);
     }
 
-    /*
-    @GetMapping("/info-account")
-    public ResponseEntity<String> getAccount() throws Exception {
 
-    }
-
-     */
 
 
 }
