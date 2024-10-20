@@ -1,9 +1,7 @@
 package co.edu.uniquindio.peluqueria.controllers;
 
-import co.edu.uniquindio.peluqueria.dtos.accountdto.CreateAccountDTO;
-import co.edu.uniquindio.peluqueria.dtos.accountdto.InfoLoginAccount;
-import co.edu.uniquindio.peluqueria.dtos.accountdto.LoginAccountDTO;
-import co.edu.uniquindio.peluqueria.dtos.accountdto.UpdateAccountDTO;
+import co.edu.uniquindio.peluqueria.dto.messages.MessageDTO;
+import co.edu.uniquindio.peluqueria.dtos.accountdto.*;
 import co.edu.uniquindio.peluqueria.services.interfaces.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -52,6 +51,16 @@ public class AccountController {
         String message = accountService.updateAccount(account);
         return ResponseEntity.ok(message);
     }
+
+    @PostMapping("/filter")
+    public ResponseEntity<MessageDTO<List<AccountItemDTO>>> filterEventsClient(@Valid @RequestBody Map<String, String> request){
+        String search = request.get("search");
+        List<AccountItemDTO> accounts = accountService.filterAccounts(search);
+        System.out.println(accounts.toString());
+        return ResponseEntity.ok(new MessageDTO<>(false, accounts));
+    }
+
+
 
 
 

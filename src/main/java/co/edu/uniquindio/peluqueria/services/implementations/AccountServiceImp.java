@@ -1,17 +1,16 @@
 package co.edu.uniquindio.peluqueria.services.implementations;
 
-import co.edu.uniquindio.peluqueria.dtos.accountdto.CreateAccountDTO;
-import co.edu.uniquindio.peluqueria.dtos.accountdto.InfoAccountDTO;
-import co.edu.uniquindio.peluqueria.dtos.accountdto.InfoLoginAccount;
-import co.edu.uniquindio.peluqueria.dtos.accountdto.UpdateAccountDTO;
+import co.edu.uniquindio.peluqueria.dtos.accountdto.*;
 import co.edu.uniquindio.peluqueria.model.documents.Account;
 import co.edu.uniquindio.peluqueria.model.enums.AccountType;
 import co.edu.uniquindio.peluqueria.repositories.AccountRepository;
 import co.edu.uniquindio.peluqueria.services.interfaces.AccountService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountServiceImp implements AccountService {
@@ -27,6 +26,7 @@ public class AccountServiceImp implements AccountService {
         return accountRepository.findByEmail(email).isPresent();
     }
 
+    @Override
     public Account getAccountByDni(String dni) {
         Optional<Account> account = accountRepository.findByDni(dni);
         return account.orElse(null);
@@ -143,5 +143,26 @@ public class AccountServiceImp implements AccountService {
         }
 
         return accountOptional.get();
+    }
+
+    @Override
+    public List<AccountItemDTO> filterAccounts(String search) {
+        List<Account> accountsFiltered;
+
+        // Si el campo de búsqueda está vacío, obtener todas las cuentas de tipo CLIENT
+        if (search == null || search.trim().isEmpty()) {
+            accountsFiltered = accountRepository.findAllByAccountType(AccountType.CLIENT);
+        } else {
+            // Si hay un término de búsqueda, aplicar el filtro sobre nombre, email y teléfono
+            accountsFiltered = accountRepository.findAccounts(search);
+        }
+
+        return accountsFiltered.stream()
+                .map(account -> new AccountItemDTO(
+                        account.getName(),
+                        account.getEmail(),
+                        account.getPhone()
+                ))
+                .collect(Collectors.toList());
     }
 }
