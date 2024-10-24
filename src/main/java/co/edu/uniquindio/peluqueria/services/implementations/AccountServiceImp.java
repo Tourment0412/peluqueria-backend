@@ -195,6 +195,6 @@ public class AccountServiceImp implements AccountService {
                 return account.getName();
             }
         }
-        return null;
+        return "No encontrado";
     }
 }

@@ -32,6 +32,8 @@ public class AppointmentServiceImp implements AppointmentService {
         Appointment appointment = new Appointment();
         appointment.setDate(createAppointmentDTO.date());
         appointment.setPrice(createAppointmentDTO.price());
+        appointment.setService(createAppointmentDTO.service());
+
         //if(accountService.getAccountByDni(createAppointmentDTO.idClient())==null || accountService.getAccountByDni(createAppointmentDTO.idWorker())==null){
             //throw new Exception("The customer or employee is not registered");
         //}
