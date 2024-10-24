@@ -18,7 +18,6 @@ public class AppointmentController {
 
     @PostMapping("/create")
     public ResponseEntity<String> createAppointment(@RequestBody CreateAppointmentDTO createAppointmentDTO) throws Exception {
-        System.out.println("Llegando");
         String message = appointmentService.createAppointment(createAppointmentDTO);
         System.out.println(message);
         return ResponseEntity.ok(message);

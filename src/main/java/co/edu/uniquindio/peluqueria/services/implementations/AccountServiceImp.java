@@ -39,8 +39,8 @@ public class AccountServiceImp implements AccountService {
             throw new Exception("Account with this email already exists");
         }
 
-        if (createAccountDTO.dni() != null) {
-            getAccountByDni(createAccountDTO.dni());
+        if (createAccountDTO.dni() != null && getAccountByDni(createAccountDTO.dni())!=null ) {
+
             throw new Exception("Account with this dni already exists");
         }
 
