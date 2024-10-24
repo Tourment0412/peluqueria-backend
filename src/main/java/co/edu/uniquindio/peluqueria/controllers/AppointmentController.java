@@ -1,7 +1,9 @@
 package co.edu.uniquindio.peluqueria.controllers;
 
+import co.edu.uniquindio.peluqueria.dtos.appointmentdto.AppointmentDTO;
 import co.edu.uniquindio.peluqueria.dtos.appointmentdto.CreateAppointmentDTO;
 import co.edu.uniquindio.peluqueria.dtos.appointmentdto.UpdateAppointmentDTO;
+import co.edu.uniquindio.peluqueria.model.documents.Appointment;
 import co.edu.uniquindio.peluqueria.services.interfaces.AppointmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/appointment")
@@ -34,4 +38,13 @@ public class AppointmentController {
         String message = appointmentService.updateAppointment(updateAppointmentDTO);
         return ResponseEntity.ok(message);
     }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<AppointmentDTO>> getAllAppointments() {
+        System.out.println("Fetching all appointments...");
+        List<AppointmentDTO> appointments = appointmentService.getAllAppointments();
+        System.out.println("Appointments fetched: " + appointments.size());
+        return ResponseEntity.ok(appointments);
+    }
+
 }

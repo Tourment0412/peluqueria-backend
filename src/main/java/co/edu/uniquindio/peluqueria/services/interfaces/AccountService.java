@@ -15,4 +15,5 @@ public interface AccountService {
     List<AccountItemDTO> filterAccounts(String search);
     Boolean existAccountByEmail(String email);
     List<AccountItemDTO> filterAccountsEmployee(String search);
+    String getWorkerNameById(String idWorker);
 }

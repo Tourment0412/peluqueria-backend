@@ -186,4 +186,15 @@ public class AccountServiceImp implements AccountService {
                 ))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public String getWorkerNameById(String idWorker) {
+        List<Account> accountsFiltered = accountRepository.findAllByAccountType(AccountType.EMPLOYEE);
+        for (Account account : accountsFiltered) {
+            if (account.getId().equals(idWorker)) {
+                return account.getName();
+            }
+        }
+        return null;
+    }
 }

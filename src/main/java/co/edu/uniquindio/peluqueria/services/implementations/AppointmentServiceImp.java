@@ -1,5 +1,6 @@
 package co.edu.uniquindio.peluqueria.services.implementations;
 
+import co.edu.uniquindio.peluqueria.dtos.appointmentdto.AppointmentDTO;
 import co.edu.uniquindio.peluqueria.dtos.appointmentdto.CreateAppointmentDTO;
 import co.edu.uniquindio.peluqueria.dtos.appointmentdto.InfoAppointmentDTO;
 import co.edu.uniquindio.peluqueria.dtos.appointmentdto.UpdateAppointmentDTO;
@@ -10,15 +11,20 @@ import co.edu.uniquindio.peluqueria.services.interfaces.AppointmentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class AppointmentServiceImp implements AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
-    private AccountService accountService;
+    private final AccountService accountService;
 
-    public AppointmentServiceImp(AppointmentRepository appointmentRepository) {
+    public AppointmentServiceImp(AppointmentRepository appointmentRepository, AccountService accountServiceImp, AccountService accountService) {
         this.appointmentRepository = appointmentRepository;
+
+        this.accountService = accountService;
     }
 
     @Override
@@ -68,5 +74,27 @@ public class AppointmentServiceImp implements AppointmentService {
         }
         return appointmentRepository.findById(appointmentId).get();
 
+    }
+
+    public List<AppointmentDTO> getAllAppointments() {
+        List<Appointment> appointments = appointmentRepository.findAll();
+
+        return appointments.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    private AppointmentDTO convertToDTO(Appointment appointment) {
+        // Obtener el nombre del trabajador basado en el idWorker
+        String employeeName = accountService.getWorkerNameById(appointment.getIdWorker());
+
+        // Crear y retornar el AppointmentDTO usando el record
+        return new AppointmentDTO(
+                appointment.getId(),
+                appointment.getDate(),
+                appointment.getService(),
+                appointment.getPrice(),
+                employeeName
+        );
     }
 }
