@@ -165,4 +165,25 @@ public class AccountServiceImp implements AccountService {
                 ))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<AccountItemDTO> filterAccountsEmployee(String search) {
+        List<Account> accountsFiltered;
+
+        // Si el campo de búsqueda está vacío, obtener todas las cuentas de tipo CLIENT
+        if (search == null || search.trim().isEmpty()) {
+            accountsFiltered = accountRepository.findAllByAccountType(AccountType.EMPLOYEE);
+        } else {
+            // Si hay un término de búsqueda, aplicar el filtro sobre nombre, email y teléfono
+            accountsFiltered = accountRepository.findAccountsEmployee(search);
+        }
+
+        return accountsFiltered.stream()
+                .map(account -> new AccountItemDTO(
+                        account.getName(),
+                        account.getEmail(),
+                        account.getPhone()
+                ))
+                .collect(Collectors.toList());
+    }
 }

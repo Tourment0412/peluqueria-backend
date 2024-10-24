@@ -33,6 +33,12 @@ public interface AccountRepository extends MongoRepository<Account, String> {
             "{ 'email': { $regex: ?0, $options: 'i' } } ] } ] }")
     List<Account> findAccounts(String search);
 
+    @Query("{ $and: [ { 'accountType': 'EMPLOYEE' }, { $or: [ " +
+            "{ 'name': { $regex: ?0, $options: 'i' } }, " +
+            "{ 'phone': { $regex: ?0, $options: 'i' } }, " +
+            "{ 'email': { $regex: ?0, $options: 'i' } } ] } ] }")
+    List<Account> findAccountsEmployee(String search);
+
 
     @Query("{'accountType': ?0}")
     List<Account> findAllByAccountType(AccountType accountType);

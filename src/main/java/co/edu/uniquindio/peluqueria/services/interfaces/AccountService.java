@@ -14,4 +14,5 @@ public interface AccountService {
     InfoLoginAccount findAccountLogin(String email, String password);
     List<AccountItemDTO> filterAccounts(String search);
     Boolean existAccountByEmail(String email);
+    List<AccountItemDTO> filterAccountsEmployee(String search);
 }

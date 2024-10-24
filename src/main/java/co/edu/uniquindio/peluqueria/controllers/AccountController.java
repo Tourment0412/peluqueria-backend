@@ -60,6 +60,14 @@ public class AccountController {
         return ResponseEntity.ok(new MessageDTO<>(false, accounts));
     }
 
+    @PostMapping("/filterEmployee")
+    public ResponseEntity<MessageDTO<List<AccountItemDTO>>> filterAccountsEmployee(@Valid @RequestBody Map<String, String> request){
+        String search = request.get("search");
+        List<AccountItemDTO> accounts = accountService.filterAccountsEmployee(search);
+        System.out.println(accounts.toString());
+        return ResponseEntity.ok(new MessageDTO<>(false, accounts));
+    }
+
 
 
 
