@@ -21,6 +21,12 @@ public class AccountController {
 
     private final AccountService accountService;
 
+    @PostMapping("/existDni")
+    public ResponseEntity<Boolean> existDniAccount(@RequestBody Map<String, String> request) {
+        String dni=request.get("dni");
+        return ResponseEntity.ok(accountService.existAccountByDni(dni));
+    }
+
 
     @PostMapping("/login")
     public ResponseEntity<InfoLoginAccount> login(@RequestBody LoginAccountDTO account) {

@@ -197,4 +197,9 @@ public class AccountServiceImp implements AccountService {
         }
         return "No encontrado";
     }
+
+    @Override
+    public Boolean existAccountByDni(String dni) {
+        return accountRepository.findByDni(dni).isPresent();
+    }
 }

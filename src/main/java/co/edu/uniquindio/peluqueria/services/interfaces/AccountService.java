@@ -16,4 +16,6 @@ public interface AccountService {
     Boolean existAccountByEmail(String email);
     List<AccountItemDTO> filterAccountsEmployee(String search);
     String getWorkerNameById(String idWorker);
+
+    Boolean existAccountByDni(String dni);
 }
