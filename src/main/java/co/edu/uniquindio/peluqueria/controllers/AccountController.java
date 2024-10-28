@@ -74,9 +74,17 @@ public class AccountController {
         return ResponseEntity.ok(new MessageDTO<>(false, accounts));
     }
 
+    @PostMapping("/getInfoAccount")
+    public ResponseEntity<CreateAccountDTO> getInfoAccount(@RequestBody Map<String, String> request) {
+        String email=request.get("email");
+        return ResponseEntity.ok(accountService.getInfoAccountEmail(email));
+    }
 
-
-
+    @PostMapping("/updateClient")
+    public ResponseEntity<Void> login(@RequestBody UpdateAccountDTO account) {
+        accountService.updateAccountClient(account);
+        return ResponseEntity.noContent().build();
+    }
 
 
 }

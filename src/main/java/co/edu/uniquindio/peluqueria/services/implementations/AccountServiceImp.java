@@ -202,4 +202,28 @@ public class AccountServiceImp implements AccountService {
     public Boolean existAccountByDni(String dni) {
         return accountRepository.findByDni(dni).isPresent();
     }
+
+    @Override
+    public CreateAccountDTO getInfoAccountEmail(String email) {
+        Account account=accountRepository.findByEmail(email).get();
+        return new CreateAccountDTO(
+                account.getName(),
+                account.getDni(),
+                account.getAddress(),
+                account.getPhone(),
+                account.getPassword(),
+                account.getEmail(),
+                account.getAccountType()
+        );
+    }
+
+    @Override
+    public void updateAccountClient(UpdateAccountDTO dataAccount) {
+        Account account=accountRepository.findByEmail(dataAccount.email()).get();
+        account.setName(dataAccount.name());
+        account.setAddress(dataAccount.address());
+        account.setPhone(dataAccount.phone());
+        account.setPassword(dataAccount.password());
+        accountRepository.save(account);
+    }
 }

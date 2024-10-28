@@ -18,4 +18,9 @@ public interface AccountService {
     String getWorkerNameById(String idWorker);
 
     Boolean existAccountByDni(String dni);
+
+    CreateAccountDTO getInfoAccountEmail(String email);
+
+    void updateAccountClient(UpdateAccountDTO account);
+
 }
