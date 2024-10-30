@@ -16,4 +16,6 @@ public interface AppointmentService {
     InfoAppointmentDTO getInfoAppointment(String appointmentId) throws Exception;
 
     List<AppointmentDTO> getAllAppointments();
+
+    void informAppointment(CreateAppointmentDTO createAppointmentDTO);
 }

@@ -226,4 +226,20 @@ public class AccountServiceImp implements AccountService {
         account.setPassword(dataAccount.password());
         accountRepository.save(account);
     }
+
+    @Override
+    public InfoAccountDTO findAccountByDni(String dni) {
+        Account account = accountRepository.findByDni(dni).get();
+        return new InfoAccountDTO(
+                account.getId(),
+                account.getDni(),
+                account.getName(),
+                account.getPassword(),
+                account.getPhone(),
+                account.getAddress(),
+                account.getEmail(),
+                account.getLoyaltyPoints(),
+                account.getAccountType()
+        );
+    }
 }
