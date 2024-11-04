@@ -1,15 +1,22 @@
 package co.edu.uniquindio.peluqueria.services.implementations;
 
+import co.edu.uniquindio.peluqueria.dtos.productdto.ProductFilterDTO;
 import co.edu.uniquindio.peluqueria.dtos.productdto.ProductItemDTO;
 import co.edu.uniquindio.peluqueria.dtos.productdto.RegisterProductDTO;
 import co.edu.uniquindio.peluqueria.model.documents.Product;
 import co.edu.uniquindio.peluqueria.repositories.ProductRepository;
 import co.edu.uniquindio.peluqueria.services.interfaces.ProductService;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,9 +24,11 @@ import java.util.stream.Collectors;
 public class ProductServiceImp implements ProductService {
 
     private final ProductRepository productRepository;
+    private final MongoTemplate mongoTemplate;
 
-    public ProductServiceImp(ProductRepository productRepository) {
+    public ProductServiceImp(ProductRepository productRepository, MongoTemplate mongoTemplate) {
         this.productRepository = productRepository;
+        this.mongoTemplate = mongoTemplate;
     }
 
     @Override
@@ -77,6 +86,34 @@ public class ProductServiceImp implements ProductService {
         productRepository.deleteById(id);
 
         return "Product deleted successfully";
+    }
+
+    @Override
+    public List<ProductItemDTO> filterProducts(ProductFilterDTO productFilterDTO) throws Exception {
+        Query query = new Query();
+        Map<String, Object> params= new HashMap<>();
+        if (productFilterDTO.productName()!=null && !productFilterDTO.productName().isEmpty()){
+            String regexName= ".*" + productFilterDTO.productName() + ".*";
+            query.addCriteria(Criteria.where("name").is(regexName));
+        }
+        if(productFilterDTO.priceLower()>0.0f && productFilterDTO.priceUpper()>0.0f){
+            query.addCriteria(Criteria.where("unitPrice").gt(productFilterDTO.priceLower()).lt(productFilterDTO.priceUpper()));
+        }else if(productFilterDTO.priceLower()>0.0f){
+            query.addCriteria(Criteria.where("unitPrice").gt(productFilterDTO.priceLower()));
+        }else if(productFilterDTO.priceUpper()>0.0f){
+            query.addCriteria(Criteria.where("unitPrice").gt(productFilterDTO.priceUpper()));
+        }
+
+        // Condición para que quantity sea mayor a cero
+        query.addCriteria(Criteria.where("quantity").gt(0));
+
+        return mongoTemplate.find(query, Product.class).stream().map(e -> new ProductItemDTO(
+                e.getId(),
+                e.getName(),
+                e.getQuantity(),
+                e.getUnitPrice()
+        )).collect(Collectors.toList());
+
     }
 
 

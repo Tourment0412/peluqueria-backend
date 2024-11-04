@@ -1,5 +1,6 @@
 package co.edu.uniquindio.peluqueria.services.interfaces;
 
+import co.edu.uniquindio.peluqueria.dtos.productdto.ProductFilterDTO;
 import co.edu.uniquindio.peluqueria.dtos.productdto.ProductItemDTO;
 import co.edu.uniquindio.peluqueria.dtos.productdto.RegisterProductDTO;
 
@@ -14,4 +15,6 @@ public interface ProductService {
     String updateProduct(ProductItemDTO productItemDTO) throws Exception;
 
     String deleteProduct(String id) throws Exception;
+
+    List<ProductItemDTO> filterProducts(ProductFilterDTO productFilterDTO) throws Exception;
 }
