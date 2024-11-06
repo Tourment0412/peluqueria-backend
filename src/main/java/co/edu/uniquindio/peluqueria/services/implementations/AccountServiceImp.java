@@ -242,4 +242,12 @@ public class AccountServiceImp implements AccountService {
                 account.getAccountType()
         );
     }
+
+    @Override
+    public Account findByEmail(String email) throws Exception {
+        if(existAccountByEmail(email)){
+            return accountRepository.findByEmail(email).get();
+        }
+        throw new Exception("Usuario no encontrado");
+    }
 }

@@ -25,4 +25,9 @@ public class Product {
         this.quantity = quantity;
         this.unitPrice = unitPrice;
     }
+
+
+    public boolean validateAmount(int quantityToSale){
+        return quantity >= quantityToSale;
+    }
 }

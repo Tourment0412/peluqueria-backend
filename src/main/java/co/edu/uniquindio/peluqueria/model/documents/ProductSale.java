@@ -13,13 +13,22 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @ToString
+
 public class ProductSale {
     @Id
     private String id;
     private float total;
     private LocalDateTime date;
-    private List<ProductSaleDetail> ProductSaleDetailList;
+    private List<ProductSaleDetail> productSaleDetailList;
     private String idClient;
     //I don't think here should be
-    private String idWorker;
+    //private String idWorker;
+
+    @Builder
+    public ProductSale(float total, LocalDateTime date, List<ProductSaleDetail> productSaleDetailList,String idClient) {
+        this.total = total;
+        this.date = date;
+        this.productSaleDetailList = productSaleDetailList;
+        this.idClient = idClient;
+    }
 }

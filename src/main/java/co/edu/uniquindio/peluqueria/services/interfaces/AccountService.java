@@ -24,4 +24,6 @@ public interface AccountService {
     void updateAccountClient(UpdateAccountDTO account);
 
     InfoAccountDTO findAccountByDni(String dni);
+
+    Account findByEmail(String email) throws Exception;
 }

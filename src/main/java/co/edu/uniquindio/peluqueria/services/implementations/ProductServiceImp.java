@@ -97,15 +97,15 @@ public class ProductServiceImp implements ProductService {
             query.addCriteria(Criteria.where("name").is(regexName));
         }
         if(productFilterDTO.priceLower()>0.0f && productFilterDTO.priceUpper()>0.0f){
-            query.addCriteria(Criteria.where("unitPrice").gt(productFilterDTO.priceLower()).lt(productFilterDTO.priceUpper()));
+            query.addCriteria(Criteria.where("unitPrice").gte(productFilterDTO.priceLower()).lte(productFilterDTO.priceUpper()));
         }else if(productFilterDTO.priceLower()>0.0f){
-            query.addCriteria(Criteria.where("unitPrice").gt(productFilterDTO.priceLower()));
+            query.addCriteria(Criteria.where("unitPrice").gte(productFilterDTO.priceLower()));
         }else if(productFilterDTO.priceUpper()>0.0f){
-            query.addCriteria(Criteria.where("unitPrice").gt(productFilterDTO.priceUpper()));
+            query.addCriteria(Criteria.where("unitPrice").lte(productFilterDTO.priceUpper()));
         }
 
         // Condición para que quantity sea mayor a cero
-        query.addCriteria(Criteria.where("quantity").gt(0));
+        query.addCriteria(Criteria.where("quantity").gte(0));
 
         return mongoTemplate.find(query, Product.class).stream().map(e -> new ProductItemDTO(
                 e.getId(),
@@ -114,6 +114,15 @@ public class ProductServiceImp implements ProductService {
                 e.getUnitPrice()
         )).collect(Collectors.toList());
 
+    }
+
+    @Override
+    public Product findProductById(String id) throws Exception {
+        Optional<Product> productOptional= productRepository.findById(id);
+        if (productOptional.isEmpty()){
+            throw new Exception("Product not found");
+        }
+        return productOptional.get();
     }
 
 

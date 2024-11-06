@@ -8,9 +8,18 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 @ToString
 public class ProductSaleDetail {
-    @Id
-    private String id;
+
+    private String idProduct;
+    private String productName;
     private int quantity;
     private float subtotal;
-    private String idProduct;
+
+    @Builder
+    public ProductSaleDetail(String idProduct, String productName, int quantity, float subtotal) {
+        this.idProduct = idProduct;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.subtotal = subtotal;
+    }
+
 }
