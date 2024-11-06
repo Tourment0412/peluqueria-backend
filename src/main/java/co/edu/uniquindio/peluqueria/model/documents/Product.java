@@ -30,4 +30,8 @@ public class Product {
     public boolean validateAmount(int quantityToSale){
         return quantity >= quantityToSale;
     }
+
+    public void subtractQuantity(int quantityToSale){
+        this.quantity-=quantityToSale;
+    }
 }

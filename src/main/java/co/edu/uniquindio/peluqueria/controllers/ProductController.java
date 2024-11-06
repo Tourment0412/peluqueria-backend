@@ -47,6 +47,7 @@ public class ProductController {
     public ResponseEntity<MessageDTO<List<ProductItemDTO>>> getAllProducts() {
         try {
             List<ProductItemDTO> products = productService.getAllProducts();
+            System.out.println(products.size());
             return ResponseEntity.ok(new MessageDTO<>(false, products));
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(new MessageDTO<>(true,null));

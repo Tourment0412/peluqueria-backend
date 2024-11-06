@@ -125,6 +125,16 @@ public class ProductServiceImp implements ProductService {
         return productOptional.get();
     }
 
+    @Override
+    public ProductItemDTO castProductItemDTO(Product product) throws Exception {
+        return new ProductItemDTO(
+                product.getId(),
+                product.getName(),
+                product.getQuantity(),
+                product.getUnitPrice()
+        );
+    }
+
 
     private boolean exitsProduct(String productName) throws Exception {
         Optional <Product> product = productRepository.findByName(productName);

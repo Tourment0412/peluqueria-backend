@@ -47,6 +47,9 @@ public class ProductSaleServiceImp implements ProductSaleService {
                         .build();
                 saleDetails.add(productSaleDetail);
                 total += productSaleDetail.getSubtotal();
+                product.subtractQuantity(productItem.quantity());
+                productService.updateProduct(productService.castProductItemDTO(product));
+
 
             } else {
                 throw new Exception("Cantidad de productos no valida");

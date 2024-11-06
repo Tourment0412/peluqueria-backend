@@ -21,4 +21,6 @@ public interface ProductService {
 
     Product findProductById(String id) throws Exception;
 
+    ProductItemDTO castProductItemDTO(Product product) throws Exception;
+
 }
